@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURLs = {
   //development: 'http://localhost:8060/', // API server url (Development)
-  production: 'http://localhost:8060/', // API server url (Production)
+  production: 'http://13.233.173.83:8060/', // API server url (Production)
   //staging: 'https://dev.hibiller.com/',  // API server url (Staging)
 };
 
