@@ -1,36 +1,28 @@
-# Stage 1: Build stage
-FROM node:20-alpine as build
-
-WORKDIR /app
+# Stage 1: Development stage
+FROM node:20-alpine as development
+WORKDIR /hotelfrontend
 
 COPY package.json .
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
+# Stage 2: Build stage
+FROM development as build
+
 RUN npm run build
 
-# Stage 2: Create the production image
-FROM node:20-alpine
-WORKDIR /app
+# Stage 3: Production stage
+FROM node:20-alpine as production
 
-# Copy the built files from the build stage
-COPY --from=build /app/dist ./dist
-# Expose port 3000
-#EXPOSE 8080
+WORKDIR /hotelfrontend
 
+COPY --from=build /hotelfrontend/dist ./dist
 COPY package.json .
-COPY vite.config.js .
-COPY . .
+
 
 RUN npm install -g http-server
+#RUN npm install --only=production
 
-RUN npm install 
+EXPOSE 3000
 
-EXPOSE 8080
-
-CMD ["http-server", "dist", "-p", "8080"]
+CMD ["npm", "start"]
