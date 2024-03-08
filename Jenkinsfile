@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
-        git 'git'
+        git 'Git'
     }
 
     stages {
