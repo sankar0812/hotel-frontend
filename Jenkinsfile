@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                sh 'git clone -b main https://sankarasubramanian1999:k72yfjjbq2ynt34hjc37c5d7hxrxakwgowv5lvdtsvtbbr7xeb6qsankarasubramanian1999@dev.azure.com/sankarasubramanian1999/Azure-devops_demo/_git/hotel-frontend'
+                sh 'git clone -b main https://sankarasubramanian1999:k72yfjjbq2ynt34hjc37c5d7hxrxakwgowv5lvdtsvtbbr7xeb6q@dev.azure.com/sankarasubramanian1999/Azure-devops_demo/_git/hotel-frontend'
             }
         }
 
