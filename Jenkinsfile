@@ -1,9 +1,9 @@
 pipeline {
     agent {label 'aws-node'}
-    
+
     tools {
         // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
-        git 'Git'
+        git 'git'
     }
 
     stages {
