@@ -7,18 +7,25 @@ import jsconfigPaths from 'vite-jsconfig-paths'
 export default defineConfig({
   plugins: [react(), jsconfigPaths()],
   server: {
-    host: true,
     port: 3000,
-    strictPort: true,
-    //origin: "http: //0.0.0.0:8080",
   },
   build: {
     rollupOptions: {
-      external: [
-        '@assets/icons/roomBooking.svg',
-        '@assets/icons/multipleroomBooking.svg',
-        '@assets/commonData/DashboardData',
-      ],
+      plugins: [],
     },
   },
+  // resolve: {
+  //   alias: {
+  //     '@assets':'src/assets',
+  //   },
+  // },
+  // build: {
+  //   rollupOptions: {
+  //     external: [
+  //       //'@assets/icons/roomBooking.svg',
+  //       '@assets/icons/multipleroomBooking.svg',
+  //       '@assets/commonData/DashboardData',
+  //     ],
+  //   },
+  // },
 })
