@@ -1,18 +1,49 @@
 name: Development
+
 on:
   push:
     branches: [ dev ]
 
 jobs:
   build:
-    runs-on: ideaux-dev
-   
+    runs-on: ubuntu-latest
+
     steps:
       - name: Clone Repository
         uses: actions/checkout@v3
-        with:
-          path: "dev"
-         
-      - name: Install Packages & Setup
+
+      - name: Set up environment variables
         run: |
-         sudo service nginx restart
+           echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ideauxhub/hotel-fend:$BUILD_NUMBER
+
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
+
+      - name: Push the Docker image to Docker Hub
+        run: docker push ideauxhub/hotel-fend:$BUILD_NUMBER
+
+
+  deploy:
+    needs: build
+    runs-on: devops-win
+
+    steps:
+      - name: Set up environment variables
+        run: |
+           echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull the Docker image from Docker Hub
+        run: docker pull ideauxhub/hotel-fend:$BUILD_NUMBER
+
+      - name: Remove the old Docker container
+        run: |
+          docker stop hotel-fend-container || true
+          docker rm hotel-fend-container || true
+
+      - name: Run the Docker container
+        run: docker run -d --name hotel-fend-container -p 3000:3000 ideauxhub/hotel-fend:$BUILD_NUMBER
