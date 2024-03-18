@@ -31,11 +31,11 @@ jobs:
     runs-on: devops-win
 
     steps:
-      - name: Set up environment variables
-        run: |
-           echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
-      - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Set up environment variables
+      #   run: |
+      #      echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+      # - name: Log in to Docker Hub
+      #   run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Pull the Docker image from Docker Hub
         run: docker pull ideauxhub/hotel-fend:$BUILD_NUMBER
