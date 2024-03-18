@@ -1,5 +1,5 @@
 # Stage 1: Development stage
-FROM node:20-alpine as development
+FROM node:14-alpine as development
 WORKDIR /hotelfrontend
 
 COPY package.json .
