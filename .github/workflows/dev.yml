@@ -28,7 +28,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ideaux-dev-vps
+    runs-on: devops-win
 
     steps:
       - name: Set up environment variables
