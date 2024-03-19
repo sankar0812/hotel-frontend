@@ -1,15 +1,15 @@
 pipeline {
-    agent {label 'aws-node'}
+    agent any
 
-    tools {
-        // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
-        git 'Git'
-    }
+    // tools {
+    //     // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
+    //     git 'Git'
+    // }
 
-    stages {
-        stage('Clone Repository') {
+    stages { 
+        stage('SCM Checkout') {
             steps {
-                sh 'git clone https://sankarasubramanian1999:k72yfjjbq2ynt34hjc37c5d7hxrxakwgowv5lvdtsvtbbr7xeb6q@dev.azure.com/sankarasubramanian1999/Azure-devops_demo/_git/hotel-frontend'
+               git 'https://github.com/sankar0812/hotel-frontend.git'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t sankar0812/hotel:${BUILD_NUMBER} .'
+                    sh 'docker build -t ideauxhub/hotel:${BUILD_NUMBER} .'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage('Log in to Docker Hub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-sankar', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-ideaux', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     }
                 }
@@ -42,7 +42,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    sh 'docker push sankar0812/hotel:${BUILD_NUMBER}'
+                    sh 'docker push ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
@@ -50,15 +50,23 @@ pipeline {
         stage('Delete Local Docker Image') {
             steps {
                 script {
-                    sh 'docker rmi sankar0812/hotel:${BUILD_NUMBER}'
+                    sh 'docker rmi ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         script {
+        //             // Use kubectl to apply your deployment.yaml file
+        //             bat 'kubectl apply -f deployment.yaml'
+        //         }
+        //     }
+        // }
 
         stage('Pull Docker Image from Docker Hub') {
             steps {
                 script {
-                    sh 'docker pull sankar0812/hotel:${BUILD_NUMBER}'
+                    sh 'docker pull ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
@@ -66,7 +74,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d --name my-container sankar0812/hotel:${BUILD_NUMBER}'
+                    sh 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
