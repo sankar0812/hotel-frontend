@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotel-fend-deployment
+  labels:
+    app: hotel-fend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotel-fend
+  template:
+    metadata:
+      labels:
+        app: hotel-fend
+    spec:
+      containers:
+        - name: hotel-fend
+          image: ideauxhub/hotel-fend:${BUILD_NUMBER}
+          ports:
+            - containerPort: 3000
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotel-fend-service
+spec:
+  type: NodePort
+  selector:
+    app: hotel-fend
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30000  # Choose a nodePort in the range 30000-32767
