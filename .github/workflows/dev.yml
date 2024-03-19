@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Deploy to Kubernetes
-        uses: docker/k8s-deploy@v2
+        uses: docker/k8s-deploy@main
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
           images: ideauxhub/hotel-fend:$GITHUB_RUN_NUMBER
