@@ -2,54 +2,49 @@ name: Development
 
 on:
   push:
-    branches:
-      - devops
+    branches: [ dev ]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Clone Repository
+        uses: actions/checkout@v3
 
       - name: Set up environment variables
         run: |
-          echo "BUILD_NUMBER=$env:GITHUB_RUN_NUMBER" >> $env:GITHUB_ENV
-          Write-Host "Build number set to $env:GITHUB_RUN_NUMBER"
+           echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
 
-      - name: Build Docker image
-        run: docker build . --file Dockerfile --tag ideauxhub/hotel-fend:$env:BUILD_NUMBER
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ideauxhub/hotel-fend:$BUILD_NUMBER
 
       - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
 
-      - name: Push Docker image to Docker Hub
-        run: docker push ideauxhub/hotel-fend:$env:BUILD_NUMBER
+      - name: Push the Docker image to Docker Hub
+        run: docker push ideauxhub/hotel-fend:$BUILD_NUMBER
+
 
   deploy:
     needs: build
-    runs-on: devops-win
+    runs-on: ideaux-dev-vps
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
       - name: Set up environment variables
         run: |
           echo "BUILD_NUMBER=$env:GITHUB_RUN_NUMBER" >> $env:GITHUB_ENV
           Write-Host "Build number set to $env:GITHUB_RUN_NUMBER"
-
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Pull Docker image from Docker Hub
-        run: docker pull ideauxhub/hotel-fend:$env:BUILD_NUMBER
+      - name: Pull the Docker image from Docker Hub
+        run: docker pull ideauxhub/hotel-fend:$BUILD_NUMBER
 
-      - name: Remove old Docker container
+      - name: Remove the old Docker container
         run: |
-          docker stop hotel-fend-container || echo "No running container to stop"
-          docker rm hotel-fend-container || echo "No existing container to remove"
+          docker stop hotel-fend-container || true
+          docker rm hotel-fend-container || true
 
-      - name: Run Docker container
-        run: docker run -d --name hotel-fend-container -p 3000:3000 ideauxhub/hotel-fend:$env:BUILD_NUMBER
+      - name: Run the Docker container
+        run: docker run -d --name hotel-fend-container -p 3003:3000 ideauxhub/hotel-fend:$BUILD_NUMBER
