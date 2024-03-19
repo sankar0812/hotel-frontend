@@ -7,11 +7,11 @@ pipeline {
     // }
 
     stages { 
-        stage('SCM Checkout') {
-            steps {
-               git 'https://github.com/sankar0812/hotel-frontend.git'
-            }
-        }
+        // stage('SCM Checkout') {
+        //     steps {
+        //        git 'https://github.com/sankar0812/hotel-frontend.git'
+        //     }
+        // }
 
         stage('Set up environment variables') {
             steps {
