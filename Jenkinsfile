@@ -16,7 +16,7 @@ pipeline {
         stage('Set up environment variables') {
             steps {
                 script {
-                    sh 'echo "BUILD_NUMBER=${BUILD_NUMBER}" > .env'
+                    bat 'echo "BUILD_NUMBER=${BUILD_NUMBER}" > .env'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t ideauxhub/hotel:${BUILD_NUMBER} .'
+                    bat 'docker build -t ideauxhub/hotel:${BUILD_NUMBER} .'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-ideaux', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        bat 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     }
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    sh 'docker push ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker push ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
@@ -50,7 +50,7 @@ pipeline {
         stage('Delete Local Docker Image') {
             steps {
                 script {
-                    sh 'docker rmi ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker rmi ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
@@ -66,7 +66,7 @@ pipeline {
         stage('Pull Docker Image from Docker Hub') {
             steps {
                 script {
-                    sh 'docker pull ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker pull ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
@@ -74,7 +74,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:${BUILD_NUMBER}'
                 }
             }
         }
