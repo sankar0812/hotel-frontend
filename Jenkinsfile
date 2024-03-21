@@ -38,8 +38,8 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    echo "Docker Hub Username: ${DOCKERHUB_CREDENTIALS_USR}"
-                    echo "Docker Hub Password: ${DOCKERHUB_CREDENTIALS_PSW}"
+                    // echo "Docker Hub Username: ${DOCKERHUB_CREDENTIALS_USR}"
+                    // echo "Docker Hub Password: ${DOCKERHUB_CREDENTIALS_PSW}"
                     
                     // Define Docker credentials
                     def dockerCreds = [
