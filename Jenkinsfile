@@ -39,20 +39,6 @@ pipeline {
             steps {
                 script {
                      bat "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
-                   // }
-                    // echo "Docker Hub Username: ${DOCKERHUB_CREDENTIALS_USR}"
-                    // echo "Docker Hub Password: ${DOCKERHUB_CREDENTIALS_PSW}"
-                    
-                    // // Define Docker credentials
-                    // def dockerCreds = [
-                    //     registryUrl: "https://index.docker.io/v1/",
-                    //     credentialsId: DOCKERHUB_CREDENTIALS_USR
-                    // ]
-                    
-                    // // Login to Docker Hub
-                    // docker.withRegistry(dockerCreds) {
-                    //     echo "${DOCKERHUB_CREDENTIALS_PSW}" | bat(script: "docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin", returnStatus: true)
-                    // }
                 }
             }
         }
@@ -71,29 +57,29 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy to Kubernetes') {
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Use kubectl to apply your deployment.yaml file
+                    bat 'kubectl apply -f deployment.yaml'
+                }
+            }
+        }
+
+        // stage('Pull Docker Image from Docker Hub') {
         //     steps {
         //         script {
-        //             // Use kubectl to apply your deployment.yaml file
-        //             bat 'kubectl apply -f deployment.yaml'
+        //             bat 'docker pull ideauxhub/hotel:latest'
         //         }
         //     }
         // }
 
-        stage('Pull Docker Image from Docker Hub') {
-            steps {
-                script {
-                    bat 'docker pull ideauxhub/hotel:latest'
-                }
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    bat 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:latest'
-                }
-            }
-        }
+        // stage('Run Docker Container') {
+        //     steps {
+        //         script {
+        //             bat 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:latest'
+        //         }
+        //     }
+        // }
     }
 }
