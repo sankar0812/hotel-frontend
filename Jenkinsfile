@@ -4,8 +4,8 @@ pipeline {
     //    DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
     // }
     environment {
-        DOCKERHUB_CREDENTIALS_USR = credentials('ideauxhub')
-        DOCKERHUB_CREDENTIALS_PSW = credentials('ideaux$aws@08')
+        DOCKERHUB_CREDENTIALS_USR = credentials('DockerHubUsername')
+        DOCKERHUB_CREDENTIALS_PSW = credentials('DockerHubPassword')
     }
 
     // tools {
