@@ -38,19 +38,21 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
+                     bat "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
+                    }
                     // echo "Docker Hub Username: ${DOCKERHUB_CREDENTIALS_USR}"
                     // echo "Docker Hub Password: ${DOCKERHUB_CREDENTIALS_PSW}"
                     
-                    // Define Docker credentials
-                    def dockerCreds = [
-                        registryUrl: "https://index.docker.io/v1/",
-                        credentialsId: DOCKERHUB_CREDENTIALS_USR
-                    ]
+                    // // Define Docker credentials
+                    // def dockerCreds = [
+                    //     registryUrl: "https://index.docker.io/v1/",
+                    //     credentialsId: DOCKERHUB_CREDENTIALS_USR
+                    // ]
                     
-                    // Login to Docker Hub
-                    docker.withRegistry(dockerCreds) {
-                        echo "${DOCKERHUB_CREDENTIALS_PSW}" | bat(script: "docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin", returnStatus: true)
-                    }
+                    // // Login to Docker Hub
+                    // docker.withRegistry(dockerCreds) {
+                    //     echo "${DOCKERHUB_CREDENTIALS_PSW}" | bat(script: "docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin", returnStatus: true)
+                    // }
                 }
             }
         }
