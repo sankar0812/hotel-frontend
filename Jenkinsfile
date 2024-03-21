@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                      bat "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
-                    }
+                   // }
                     // echo "Docker Hub Username: ${DOCKERHUB_CREDENTIALS_USR}"
                     // echo "Docker Hub Password: ${DOCKERHUB_CREDENTIALS_PSW}"
                     
