@@ -13,13 +13,13 @@ pipeline {
         //     }
         // }
 
-        stage('Set up environment variables') {
-            steps {
-                script {
-                    bat 'echo "BUILD_NUMBER=${BUILD_NUMBER}" > .env'
-                }
-            }
-        }
+        // stage('Set up environment variables') {
+        //     steps {
+        //         script {
+        //             bat 'echo "BUILD_NUMBER=${BUILD_NUMBER}" > .env'
+        //         }
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
