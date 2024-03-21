@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: hotel-fend
-          image: ideauxhub/hotel-fend:latest
+          image: ideauxhub/hotel:latest
           ports:
             - containerPort: 3000
 
