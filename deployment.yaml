@@ -19,6 +19,8 @@ spec:
           image: ideauxhub/hotel-fend:latest
           ports:
             - containerPort: 3000
+
+---
 apiVersion: v1
 kind: Service
 metadata:
