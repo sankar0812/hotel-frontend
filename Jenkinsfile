@@ -24,7 +24,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build -t ideauxhub/hotel:${BUILD_NUMBER} .'
+                    bat 'docker build -t ideauxhub/hotel:latest .'
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    bat 'docker push ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker push ideauxhub/hotel:latest'
                 }
             }
         }
@@ -50,7 +50,7 @@ pipeline {
         stage('Delete Local Docker Image') {
             steps {
                 script {
-                    bat 'docker rmi ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker rmi ideauxhub/hotel:latest'
                 }
             }
         }
@@ -66,7 +66,7 @@ pipeline {
         stage('Pull Docker Image from Docker Hub') {
             steps {
                 script {
-                    bat 'docker pull ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker pull ideauxhub/hotel:latest'
                 }
             }
         }
@@ -74,7 +74,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    bat 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:${BUILD_NUMBER}'
+                    bat 'docker run -d --name my-container -p 3000:3000 ideauxhub/hotel:latest'
                 }
             }
         }
