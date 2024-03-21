@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    // environment {
-    //    DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
-    // }
     environment {
-        DOCKERHUB_CREDENTIALS_USR = credentials('DockerHubUsername')
-        DOCKERHUB_CREDENTIALS_PSW = credentials('DockerHubPassword')
+       DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
     }
+    // environment {
+    //     DOCKERHUB_CREDENTIALS_USR = credentials('DockerHubUsername')
+    //     DOCKERHUB_CREDENTIALS_PSW = credentials('DockerHubPassword')
+    // }
 
     // tools {
     //     // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
