@@ -1,7 +1,11 @@
 pipeline {
     agent any
+    // environment {
+    //    DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
+    // }
     environment {
-       DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
+        DOCKERHUB_CREDENTIALS_USR = credentials('ideauxhub')
+        DOCKERHUB_CREDENTIALS_PSW = credentials('ideaux$aws@08')
     }
 
     // tools {
@@ -31,15 +35,22 @@ pipeline {
                 }
             }
         }
-
-        stage('login to dockerhub') {
+        stage('Login to Docker Hub') {
             steps {
-                script{
-                   echo "%DOCKERHUB_CREDENTIALS_PSW%" | docker login -u "%DOCKERHUB_CREDENTIALS_USR%" --password-stdin
+                script {
+                    // Define Docker credentials
+                    def dockerCreds = [
+                        registryUrl: "https://index.docker.io/v1/",
+                        credentialsId: DOCKERHUB_CREDENTIALS_USR
+                    ]
+                    
+                    // Login to Docker Hub
+                    docker.withRegistry(dockerCreds) {
+                        echo "${DOCKERHUB_CREDENTIALS_PSW}" | bat(script: "docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin", returnStatus: true)
+                    }
                 }
             }
         }
-
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
