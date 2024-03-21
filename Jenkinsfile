@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+       DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux'}
+    }
 
     // tools {
     //     // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
@@ -29,13 +32,9 @@ pipeline {
             }
         }
 
-        stage('Log in to Docker Hub') {
+        stage('login to dockerhub') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-ideaux', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        bat 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    }
-                }
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
