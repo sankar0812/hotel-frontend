@@ -63,14 +63,21 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Use kubectl to apply your deployment.yaml file
-                    withCredentials([kubeconfig(credentialsId: 'k8s')]) {
-                        sh "kubectl --kubeconfig=\$kubeconfig apply -f deployment.yml --validate=false"
-                    }
-                    //kubeconfig = credentials('k8s')
-                    //bat "kubectl --kubeconfig=${kubeconfig} apply -f deployment.yml --validate=false"
-                    //bat "kubectl apply -f deployment.yml"
-                }
+                  kubeconfig {
+                     id 'k8s'
+                     secret 'kubeconfig-credential-id'
+                  }
+                  sh "kubectl apply -f deployment.yml --validate=false"
+                } 
+                // script {
+                //     // Use kubectl to apply your deployment.yaml file
+                //     withCredentials([kubeconfig(credentialsId: 'k8s')]) {
+                //         sh "kubectl --kubeconfig=\$kubeconfig apply -f deployment.yml --validate=false"
+                //     }
+                //     //kubeconfig = credentials('k8s')
+                //     //bat "kubectl --kubeconfig=${kubeconfig} apply -f deployment.yml --validate=false"
+                //     //bat "kubectl apply -f deployment.yml"
+                // }
             }
         }
 
