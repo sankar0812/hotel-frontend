@@ -63,12 +63,16 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                  kubeconfig {
-                        credentials('k8s')
-                        cloudName('k8s')
-                  }
-                  bat "kubectl apply -f deployment.yml --validate=false"
-                } 
+                    withCredentials([kubernetesServiceAccountToken(credentialsId: 'k8s', namespace: 'jenkins')]) {
+                        sh "kubectl apply -f deployment.yml --validate=false"
+                    }
+                }
+                //   kubeconfig {
+                //         credentials('k8s')
+                //         cloudName('k8s')
+                //   }
+                //   bat "kubectl apply -f deployment.yml --validate=false"
+                // } 
                 // script {
                 //     // Use kubectl to apply your deployment.yaml file
                 //     withCredentials([kubeconfig(credentialsId: 'k8s')]) {
