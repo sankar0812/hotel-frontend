@@ -67,7 +67,7 @@ pipeline {
                         credentials('k8s')
                         cloudName('k8s')
                   }
-                  sh "kubectl apply -f deployment.yml --validate=false"
+                  bat "kubectl apply -f deployment.yml --validate=false"
                 } 
                 // script {
                 //     // Use kubectl to apply your deployment.yaml file
