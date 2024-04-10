@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'k8s'
+    }
     environment {
        DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
     }
@@ -61,7 +63,8 @@ pipeline {
             steps {
                 script {
                     // Use kubectl to apply your deployment.yaml file
-                    bat 'kubectl apply -f deployment.yml'
+                    kubeconfig = credentials('k8s')
+                    sh "kubectl --kubeconfig=${kubeconfig} apply -f deployment.yaml"
                 }
             }
         }
