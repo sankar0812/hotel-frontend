@@ -64,8 +64,8 @@ pipeline {
             steps {
                 script {
                   kubeconfig {
-                     id 'k8s'
-                     secret 'kubeconfig-credential-id'
+                        credentials('k8s')
+                        cloudName('k8s')
                   }
                   sh "kubectl apply -f deployment.yml --validate=false"
                 } 
