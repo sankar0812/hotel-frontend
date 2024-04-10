@@ -65,7 +65,7 @@ pipeline {
                 script {
                     // Use kubectl to apply your deployment.yaml file
                     kubeconfig = credentials('k8s')
-                    sh "kubectl --kubeconfig=${kubeconfig} apply -f deployment.yml"
+                    bat "kubectl --kubeconfig=${kubeconfig} apply -f deployment.yml"
                 }
             }
         }
