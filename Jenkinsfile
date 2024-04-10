@@ -1,7 +1,8 @@
 pipeline {
-    agent {
-        label 'k8s'
-    }
+    agent any
+    // agent {
+    //     label 'k8s'
+    // }
     environment {
        DOCKERHUB_CREDENTIALS = credentials('docker-hub-ideaux')
     }
