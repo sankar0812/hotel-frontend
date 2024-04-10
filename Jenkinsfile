@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([kubernetesServiceAccountToken(credentialsId: 'k8s', namespace: 'jenkins')]) {
-                        sh "kubectl apply -f deployment.yml --validate=false"
+                        bat "kubectl apply -f deployment.yml --validate=false"
                     }
                 }
                 //   kubeconfig {
