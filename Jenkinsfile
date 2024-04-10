@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     // Use kubectl to apply your deployment.yaml file
-                    bat 'kubectl apply -f deployment.yaml'
+                    bat 'kubectl apply -f deployment.yml'
                 }
             }
         }
