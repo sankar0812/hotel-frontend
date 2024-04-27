@@ -63,8 +63,13 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    withCredentials([kubernetesServiceAccountToken(credentialsId: 'k8s', namespace: 'jenkins')]) {
-                        bat "kubectl apply -f deployment.yml --validate=false"
+                   kubeconfig(credentialsId: 'k8s', serverUrl: '') {
+                    // Inside the kubeconfig block, you can run kubectl commands or other Kubernetes-related steps
+                    // For example:
+                       sh 'kubectl config view' // Check kubectl configuration
+                       sh 'kubectl apply -f deployment.yaml' // Apply Kubernetes deployment
+                       sh 'kubectl get pods' // Check the status of pods
+                }
                     }
                 }
                 //   kubeconfig {
