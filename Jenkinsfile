@@ -1,17 +1,17 @@
 pipeline {
-    agent {label 'aws-node'}
+    agent any
 
     tools {
         // Make sure 'Git' refers to the tool name configured in Global Tool Configuration
         git 'Git'
     }
 
-    stages {
-        stage('Clone Repository') {
-            steps {
-                sh 'git clone https://sankarasubramanian1999:k72yfjjbq2ynt34hjc37c5d7hxrxakwgowv5lvdtsvtbbr7xeb6q@dev.azure.com/sankarasubramanian1999/Azure-devops_demo/_git/hotel-frontend'
-            }
-        }
+    // stages {
+    //     stage('Clone Repository') {
+    //         steps {
+    //             sh 'git clone https://sankarasubramanian1999:k72yfjjbq2ynt34hjc37c5d7hxrxakwgowv5lvdtsvtbbr7xeb6q@dev.azure.com/sankarasubramanian1999/Azure-devops_demo/_git/hotel-frontend'
+    //         }
+    //     }
 
         stage('Set up environment variables') {
             steps {
