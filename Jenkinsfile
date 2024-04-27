@@ -66,7 +66,7 @@ pipeline {
                    def kubeconfigPath = 'C:\\Users\\IdeauxTechPvt\\.kube\\config'
                    kubeconfig(credentialsId: 'k8s', serverUrl: '') {
                        sh 'kubectl config view' // Check kubectl configuration
-                       sh "kubectl apply -f ${env.WORKSPACE}\\deployment.yaml" // Apply Kubernetes deployment
+                       sh "kubectl apply -f C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\hotel-dev\\deployment.yaml" // Apply Kubernetes deployment
                        sh 'kubectl get pods' // Check the status of pods
                 
                     }
