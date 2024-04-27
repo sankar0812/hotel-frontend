@@ -63,7 +63,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                   def kubeconfigPath = ' C:\Users\IdeauxTechPvt\.kube\config'
+                   def kubeconfigPath = 'C:\\Users\\IdeauxTechPvt\\.kube\\config'
                    kubeconfig(credentialsId: 'k8s', kubeconfigId: 'kubeconfig', serverUrl: '') {
                        sh 'kubectl config view' // Check kubectl configuration
                        sh "kubectl apply -f ${env.WORKSPACE}\\deployment.yaml" // Apply Kubernetes deployment
