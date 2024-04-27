@@ -63,11 +63,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                   kubeconfig(credentialsId: 'k8s', serverUrl: '') {
-                    // Inside the kubeconfig block, you can run kubectl commands or other Kubernetes-related steps
-                    // For example:
+                   def kubeconfigPath = ' C:\Users\IdeauxTechPvt\.kube\config'
+                   kubeconfig(credentialsId: 'k8s', kubeconfigId: 'kubeconfig', serverUrl: '') {
                        sh 'kubectl config view' // Check kubectl configuration
-                       sh 'kubectl apply -f \ProgramData\Jenkins\.jenkins\workspace\hotel-dev\deployment.yaml' // Apply Kubernetes deployment
+                       sh "kubectl apply -f ${env.WORKSPACE}\\deployment.yaml" // Apply Kubernetes deployment
                        sh 'kubectl get pods' // Check the status of pods
                 
                     }
