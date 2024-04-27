@@ -67,7 +67,7 @@ pipeline {
                     // Inside the kubeconfig block, you can run kubectl commands or other Kubernetes-related steps
                     // For example:
                        sh 'kubectl config view' // Check kubectl configuration
-                       sh 'kubectl apply -f deployment.yaml' // Apply Kubernetes deployment
+                       sh 'kubectl apply -f \ProgramData\Jenkins\.jenkins\workspace\hotel-dev\deployment.yaml' // Apply Kubernetes deployment
                        sh 'kubectl get pods' // Check the status of pods
                 
                     }
