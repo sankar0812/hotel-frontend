@@ -69,7 +69,7 @@ pipeline {
                        sh 'kubectl config view' // Check kubectl configuration
                        sh 'kubectl apply -f deployment.yaml' // Apply Kubernetes deployment
                        sh 'kubectl get pods' // Check the status of pods
-                }
+                
                     }
                 }
                 //   kubeconfig {
