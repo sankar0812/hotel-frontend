@@ -14,18 +14,18 @@ export default defineConfig({
       plugins: [],
     },
   },
-  // resolve: {
-  //   alias: {
-  //     '@assets':'src/assets',
-  //   },
-  // },
-  // build: {
-  //   rollupOptions: {
-  //     external: [
-  //       //'@assets/icons/roomBooking.svg',
-  //       '@assets/icons/multipleroomBooking.svg',
-  //       '@assets/commonData/DashboardData',
-  //     ],
-  //   },
-  // },
+  resolve: {
+    alias: {
+      '@assets':'src/assets',
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        //'@assets/icons/roomBooking.svg',
+        '@assets/icons/multipleroomBooking.svg',
+        '@assets/commonData/DashboardData',
+      ],
+    },
+  },
 })
