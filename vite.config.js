@@ -22,7 +22,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
-        //'@assets/icons/roomBooking.svg',
+        '@assets/icons/roomBooking.svg',
         '@assets/icons/multipleroomBooking.svg',
         '@assets/commonData/DashboardData',
       ],
