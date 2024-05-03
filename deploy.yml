@@ -1,0 +1,45 @@
+---
+- name: Deploy Docker container
+  hosts: aws
+  # connection: local
+  become: true
+
+  vars:
+    docker_image_name: "ideauxhub/hotel-fend"
+    container_name: "hotel-fend-container"
+    port_mapping: "3000:3000"
+    build_number: "22"
+
+  tasks:
+    - name: Pull Docker image from Docker Hub
+      docker_image:
+        name: "{{ docker_image_name }}:{{ build_number }}"
+        source: pull
+        state: present
+
+    - name: Stop old Docker container if exists
+      docker_container:
+        name: "{{ container_name }}"
+        state: stopped
+      ignore_errors: yes
+
+    - name: Remove old Docker container if exists
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Run new Docker container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image_name }}:{{ build_number }}"
+        state: started
+        detach: yes
+        ports:
+          - "{{ port_mapping }}"
+      register: docker_result
+
+    - name: Check Docker container status
+      debug:
+        msg: "Docker container is running"
+      when: docker_result.changed
