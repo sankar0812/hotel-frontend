@@ -37,8 +37,11 @@ pipeline {
                def scannerHome = tool 'sonar-scanner';
                withSonarQubeEnv('sonar') {
                  sh """
-	            ${scannerHome}/bin/sonar-scanner \
-	            -Dproject.settings=sonar-project.properties
+                     ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=hotel-frontend \
+                    -Dsonar.projectName='hotel-frontend' \
+                    -Dsonar.sources=src \
+                    -Dsonar.host.url=http://localhost:9000
 	         """
 	       }
 	    }
