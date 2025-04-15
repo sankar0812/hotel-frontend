@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const baseURLs = {
-  development: 'http://192.168.2.9:8081/', // API server url (Development)
-  //production: 'http://13.233.173.83:8060/', // API server url (Production)
+  //development: 'http://192.168.2.9:8081/', // API server url (Development)
+  production: 'https://hotel-backend-9ipo.onrender.com/', // API server url (Production)
   //staging: 'https://dev.hibiller.com/',  // API server url (Staging)
 };
 
 //const environment = process.env.NODE_ENV || 'development';
 //console.log(environment,'environment');
-const environment = 'development';
+const environment = 'production';
 
 export const baseRequest = axios.create({
   baseURL: baseURLs[environment],
